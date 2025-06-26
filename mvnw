@@ -19,10 +19,10 @@
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
+
 # Apache Maven Wrapper startup batch script, version 3.3.2
 #
 # Optional ENV vars
-# -----------------
 #   JAVA_HOME - location of a JDK home dir, required when download maven via java source
 #   MVNW_REPOURL - repo url base for downloading maven distribution
 #   MVNW_USERNAME/MVNW_PASSWORD - user and password for downloading maven
@@ -257,3 +257,7 @@ mv -- "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain" "$MAVEN_HOME" || [ -d "$MAVEN
 
 clean || :
 exec_maven "$@"
+=======
+# Maven Start Up Batch script
+#
+# Required ENV vars:
