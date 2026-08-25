@@ -2,7 +2,6 @@ package com.generation.lojagames.model;
 
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -12,8 +11,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity                                             		
 @Table(name = "tb_produtos")	
@@ -23,18 +25,20 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
 	
-	@NotNull(message = "Nome é obrigatório!")                                       										
+	@NotBlank(message = "O nome é obrigatório!")
+	@Size(min = 3, max = 255, message = "O nome deve ter entre 3 e 255 caracteres")
+	@Column(nullable = false, length = 255)                                      										
 	private String nome;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	@NotNull(message = "Preço é obrigatório!")
-	@Positive(message = "O preço deve ser maior do que zero!")
+	@NotNull(message = "O preço é obrigatório!")
+	@DecimalMin(value = "0.01", message = "O preço deve ser maior que zero!")
+	@Digits(integer = 10, fraction = 2, message = "O preço deve ter no máximo 10 dígitos inteiros e 2 decimais")
+	@Column(nullable = false, precision = 12, scale = 2)
 	private BigDecimal preco;
 	
+	@Size(max = 500, message = "A URL da foto deve ter no máximo 500 caracteres")
+	@Column(length = 500)
 	private String foto;
-
-	@Column(columnDefinition = "integer default 0")
-	private int curtir;
 
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
@@ -70,14 +74,6 @@ public class Produto {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
-	}
-
-	public int getCurtir() {
-		return curtir;
-	}
-
-	public void setCurtir(int curtir) {
-		this.curtir = curtir;
 	}
 
 	public Categoria getCategoria() {

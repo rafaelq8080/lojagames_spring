@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.generation.lojagames.model.Produto;
 import com.generation.lojagames.repository.CategoriaRepository;
 import com.generation.lojagames.repository.ProdutoRepository;
-import com.generation.lojagames.service.ProdutoService;
 
 import jakarta.validation.Valid;
 
@@ -26,9 +25,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/produtos")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoController {
-	
-	@Autowired
-	private ProdutoService produtoService;
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
@@ -86,13 +82,6 @@ public class ProdutoController {
 					return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 				})
 				.orElse(ResponseEntity.notFound().build());
-	}
-
-	@PutMapping("curtir/{id}")
-	public ResponseEntity<Produto> curtir(@PathVariable Long id){
-		return produtoService.curtir(id)
-				.map(resposta -> ResponseEntity.ok(resposta))
-				.orElse(ResponseEntity.badRequest().build());
 	}
 	
 }
