@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -44,9 +45,11 @@ public class Usuario {
 	private String foto;
 	
 	@NotNull(message = "A Data de Nascimento do Usuario é obrigatória")
+	@Past(message = "A Data de Nascimento deve ser uma data no passado")
 	@Column(name = "data_nascimento")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataNascimento;
+	private LocalDate dataNascimento;
+
 
 	public Long getId() {
 		return this.id;
